@@ -1,0 +1,476 @@
+{
+  "schemaVersion": "1.0.0",
+  "projectStateVersion": 15,
+  "summary": "Responsive, mobile-first multilingual survey website for gig/informal workers to collect and verify R&D data, including OTP-based phone verification, step-by-step form flow, optional identity verification, admin analytics/export, and privacy/compliance requirements for India.",
+  "architectural_notes": [
+    "Support multilingual content (English + Indian languages) and optimize for low bandwidth/low-end devices.",
+    "Store OTP verification logs and maintain verified/unverified status flags in backend.",
+    "Provide admin analytics and CSV/Excel export capabilities.",
+    "Include spam prevention (CAPTCHA) and consider offline save/resume for partial form completion.",
+    "Generate unique survey IDs and send confirmation SMS on successful submission.",
+    "Design data model to support expandable worker categories and dynamic subcategories.",
+    "Plan for future conversion of survey users to app users, scoring, and geo-mapping/multi-tenant scale.",
+    "User requested changing flow so OTP phone verification happens in the last step (not as an early gating requirement).",
+    "Step 3 now uses manual age input instead of grouped age ranges.",
+    "Step 4 experience grouped into ranges; Step 5 income input conditionally formatted by work mode; new 'Mode of Payment' field added."
+  ],
+  "known_issues": [
+    "OTP/phone verification flow is currently not working (user reported).",
+    "Users are not receiving OTP via SMS after entering their phone number (OTP delivery not working / SMS not arriving), blocking verification.",
+    "UI is showing raw i18n translation keys (e.g., 'categories.homeservices') instead of translated values in multiple places across the survey form",
+    "'draft.resumeTitle' i18n key is displaying as raw text instead of the translated string in the UI."
+  ],
+  "isFixRequest": true,
+  "existing_features": [
+    {
+      "id": "feature-implement-a-mobile-first-responsive-step-by-step-survey-flow-with-progress-indicator-and-clear-back-continue-controls-optimized-for-low-text-density-and-low-bandwidth-usage",
+      "title": "Implement a mobile-first, responsive, step-by-step survey flow with progress indicator and clear Back/Continue controls, optimized for low text density and low-bandwidth usage.",
+      "reqIds": [
+        "REQ-1"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-step-1-welcome-consent-gate-with-a-mandatory-consent-checkbox-and-a-privacy-notice-disable-the-continue-button-until-consent-is-checked",
+      "title": "Add Step 1 (Welcome & Consent) gate with a mandatory consent checkbox and a privacy notice; disable the Continue button until consent is checked.",
+      "reqIds": [
+        "REQ-2"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-step-2-phone-number-capture-india-format-and-otp-verification-as-mandatory-to-proceed-generate-otps-on-the-backend-log-attempts-and-show-success-failure-feedback-in-the-ui",
+      "title": "Implement Step 2 phone number capture (India format) and OTP verification as mandatory to proceed; generate OTPs on the backend, log attempts, and show success/failure feedback in the UI.",
+      "reqIds": [
+        "REQ-3"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-steps-3-9-data-capture-exactly-as-specified-including-required-vs-optional-fields-multi-select-fields-and-dynamic-logic-e-g-sub-category-depends-on-primary-category-service-area-conditional",
+      "title": "Implement Steps 3–9 data capture exactly as specified, including required vs optional fields, multi-select fields, and dynamic logic (e.g., sub-category depends on primary category; service area conditional).",
+      "reqIds": [
+        "REQ-4"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-touch-enabled-digital-signature-capture-on-step-8-and-store-the-signature-as-an-image-payload-associated-with-the-survey-submission",
+      "title": "Implement touch-enabled digital signature capture on Step 8 and store the signature as an image payload associated with the survey submission.",
+      "reqIds": [
+        "REQ-5"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-submission-confirmation-ui-that-displays-a-thank-you-message-shows-the-unique-survey-id-and-provides-an-optional-download-print-acknowledgement",
+      "title": "Add submission confirmation UI that displays a thank-you message, shows the unique survey ID, and provides an optional download/print acknowledgement.",
+      "reqIds": [
+        "REQ-7"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-admin-dashboard-screens-for-category-wise-analytics-verified-vs-unverified-counts-otp-verification-logs-and-data-export-csv",
+      "title": "Implement admin dashboard screens for: category-wise analytics, verified vs unverified counts, OTP verification logs, and data export (CSV).",
+      "reqIds": [
+        "REQ-8"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-multilingual-ui-support-with-english-as-default-and-at-least-one-indian-language-using-a-translation-system-that-allows-adding-more-languages-later-ensure-all-user-facing-text-in-this-build-request-is-implemented-in-english-strings-with-translations-layered-on-top",
+      "title": "Add multilingual UI support with English as default and at least one Indian language, using a translation system that allows adding more languages later; ensure all user-facing text in this build request is implemented in English strings with translations layered on top.",
+      "reqIds": [
+        "REQ-9"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-privacy-and-data-protection-handling-for-identity-fields-mask-aadhaar-in-the-ui-store-only-masked-representation-plus-a-one-way-salted-hash-and-clearly-mark-aadhaar-id-inputs-as-optional-with-the-provided-note",
+      "title": "Implement privacy and data-protection handling for identity fields: mask Aadhaar in the UI, store only masked representation plus a one-way salted hash, and clearly mark Aadhaar/ID inputs as optional with the provided note.",
+      "reqIds": [
+        "REQ-10"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-spam-prevention-and-completion-rate-protections-lightweight-captcha-non-third-party-rate-limiting-for-otp-requests-verifications-and-user-friendly-validation-to-reduce-drop-offs",
+      "title": "Add spam prevention and completion-rate protections: lightweight CAPTCHA (non-third-party), rate limiting for OTP requests/verifications, and user-friendly validation to reduce drop-offs.",
+      "reqIds": [
+        "REQ-11"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-offline-save-resume-for-the-in-progress-survey-on-the-same-device-best-effort-including-automatic-draft-saving-per-step-and-a-way-to-resume-from-the-last-completed-step",
+      "title": "Implement offline save & resume for the in-progress survey on the same device (best-effort), including automatic draft saving per step and a way to resume from the last completed step.",
+      "reqIds": [
+        "REQ-12"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-apply-a-coherent-distinct-visual-theme-not-blue-purple-consistently-across-the-survey-and-admin-pages-suitable-for-a-research-survey-for-gig-informal-workers-clean-high-contrast-accessible-typography-card-based-layout",
+      "title": "Apply a coherent, distinct visual theme (not blue/purple) consistently across the survey and admin pages, suitable for a research survey for gig/informal workers (clean, high-contrast, accessible typography, card-based layout).",
+      "reqIds": [
+        "REQ-13"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-a-backend-placeholder-mechanism-for-otp-sent-via-sms-and-confirmation-sms-sent-by-recording-outbound-message-payloads-in-storage-for-later-provider-integration-and-expose-them-in-the-admin-dashboard-for-verification-during-r-d",
+      "title": "Implement a backend placeholder mechanism for “OTP sent via SMS” and “Confirmation SMS sent” by recording outbound message payloads in storage for later provider integration, and expose them in the admin dashboard for verification during R&D.",
+      "reqIds": [
+        "REQ-14"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-move-phone-number-capture-otp-verification-from-survey-step-2-to-the-final-step-right-before-submission-so-users-can-complete-steps-1-9-without-being-blocked-by-otp-and-are-prompted-to-verify-their-phone-only-at-the-end",
+      "title": "Move phone number capture + OTP verification from Survey Step 2 to the final step right before submission, so users can complete Steps 1–9 without being blocked by OTP, and are prompted to verify their phone only at the end.",
+      "reqIds": [
+        "REQ-15"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-final-submission-ui-to-support-an-end-to-end-phone-verification-sequence-enter-mobile-number-request-otp-enter-otp-verify-using-the-existing-otp-request-verify-mutations-with-all-user-facing-text-defined-in-english-via-the-existing-i18n-translation-layer",
+      "title": "Update the final submission UI to support an end-to-end phone verification sequence (enter mobile number, request OTP, enter OTP, verify) using the existing OTP request/verify mutations, with all user-facing text defined in English via the existing i18n translation layer.",
+      "reqIds": [
+        "REQ-16"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-survey-submission-wiring-so-the-frontend-sends-the-verified-phone-number-and-otp-status-consistently-from-the-final-step-into-submitsurvey-and-the-backend-stores-a-coherent-survey-record-used-by-admin-analytics-verified-vs-unverified-exports",
+      "title": "Update survey submission wiring so the frontend sends the verified phone number and OTP status consistently from the final step into `submitSurvey`, and the backend stores a coherent `Survey` record used by admin analytics (verified vs unverified, exports).",
+      "reqIds": [
+        "REQ-19"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-final-step-phone-verification-ui-so-users-can-complete-verification-even-if-no-sms-is-delivered-by-displaying-the-otp-value-returned-from-the-backend-after-the-user-taps-send-otp-with-clear-copy-that-sms-delivery-may-not-be-available-in-this-build-and-that-the-displayed-otp-can-be-used-to-verify",
+      "title": "Update the final-step phone verification UI so users can complete verification even if no SMS is delivered by displaying the OTP value returned from the backend after the user taps “Send OTP”, with clear copy that SMS delivery may not be available in this build and that the displayed OTP can be used to verify.",
+      "reqIds": [
+        "REQ-20"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-adjust-i18n-translation-keys-english-hindi-for-the-new-user-facing-otp-troubleshooting-help-text-introduced-in-the-phone-verification-ui-ensuring-all-newly-added-user-facing-strings-are-implemented-in-english-and-routed-through-the-existing-translation-layer",
+      "title": "Add/adjust i18n translation keys (English + Hindi) for the new user-facing OTP troubleshooting/help text introduced in the phone verification UI, ensuring all newly added user-facing strings are implemented in English and routed through the existing translation layer.",
+      "reqIds": [
+        "REQ-21"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-replace-the-existing-privacy-notice-dialog-content-in-step1welcomeconsent-tsx-with-the-full-bilingual-english-hindi-consent-terms-provided-by-the-user-including-two-distinct-sections-1-free-worker-survey-participation-terms-with-9-numbered-points-and-a-confirmation-checkbox-statement-and-2-optional-priority-token-100-terms-with-10-numbered-points-and-a-confirmation-checkbox-statement",
+      "title": "Replace the existing privacy notice dialog content in Step1WelcomeConsent.tsx with the full bilingual (English + Hindi) consent terms provided by the user, including two distinct sections: (1) Free Worker Survey Participation terms with 9 numbered points and a confirmation checkbox statement, and (2) Optional Priority Token (₹100) terms with 10 numbered points and a confirmation checkbox statement.",
+      "reqIds": [
+        "REQ-22"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-i18n-translation-keys-for-the-new-bilingual-consent-terms-english-hindi-so-the-privacy-notice-dialog-content-can-be-localized-through-the-existing-translation-layer-ensuring-all-user-facing-strings-are-routed-through-the-i18n-system-rather-than-hardcoded",
+      "title": "Add i18n translation keys for the new bilingual consent terms (English + Hindi) so the privacy notice dialog content can be localized through the existing translation layer, ensuring all user-facing strings are routed through the i18n system rather than hardcoded.",
+      "reqIds": [
+        "REQ-23"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-in-step-3-basic-details-replace-the-age-group-dropdown-with-a-manual-age-number-input-field-that-accepts-numeric-values-with-appropriate-validation-for-reasonable-age-ranges-e-g-18-100",
+      "title": "In Step 3 (Basic Details), replace the age group dropdown with a manual age number input field that accepts numeric values, with appropriate validation for reasonable age ranges (e.g., 18-100).",
+      "reqIds": [
+        "REQ-24"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-in-step-4-worker-category-change-years-of-experience-from-a-text-input-to-a-dropdown-with-grouped-ranges-1-5-6-8-9-10-11-15-16-20-20-years",
+      "title": "In Step 4 (Worker Category), change 'Years of Experience' from a text input to a dropdown with grouped ranges: 1-5, 6-8, 9-10, 11-15, 16-20, 20+ years.",
+      "reqIds": [
+        "REQ-25"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-in-step-5-work-income-add-a-new-required-mode-of-payment-field-dropdown-or-radio-buttons-with-common-payment-mode-options-like-cash-bank-transfer-digital-wallet-cheque-etc",
+      "title": "In Step 5 (Work & Income), add a new required 'Mode of Payment' field (dropdown or radio buttons) with common payment mode options like Cash, Bank Transfer, Digital Wallet, Cheque, etc.",
+      "reqIds": [
+        "REQ-26"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-in-step-5-work-income-make-the-approximate-income-input-format-conditional-based-on-the-work-mode-selected-in-step-4-if-work-mode-is-daily-wage-show-daily-income-format-otherwise-show-monthly-income-format",
+      "title": "In Step 5 (Work & Income), make the approximate income input format conditional based on the work mode selected in Step 4: if work mode is 'Daily Wage', show daily income format; otherwise show monthly income format.",
+      "reqIds": [
+        "REQ-27"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-in-step-5-work-income-under-do-you-receive-add-a-conditional-field-for-the-pay-slip-checkbox-if-checked-show-a-text-input-for-employee-name-company-name",
+      "title": "In Step 5 (Work & Income), under 'Do you receive', add a conditional field for the 'Pay Slip' checkbox: if checked, show a text input for 'Employee Name / Company Name'.",
+      "reqIds": [
+        "REQ-28"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-in-step-5-work-income-under-do-you-receive-add-a-conditional-field-for-the-insurance-checkbox-if-checked-show-a-text-input-or-dropdown-for-which-type-of-insurance",
+      "title": "In Step 5 (Work & Income), under 'Do you receive', add a conditional field for the 'Insurance' checkbox: if checked, show a text input or dropdown for 'Which type of insurance'.",
+      "reqIds": [
+        "REQ-29"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-in-step-6-address-service-area-add-two-new-required-fields-panchayat-and-block-after-the-area-field-and-before-the-service-area-section",
+      "title": "In Step 6 (Address & Service Area), add two new required fields 'Panchayat' and 'Block' after the 'Area' field and before the service area section.",
+      "reqIds": [
+        "REQ-30"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-in-step-6-address-service-area-when-user-selects-no-for-service-area-differing-from-residential-address-show-detailed-serving-location-fields-serving-city-area-panchayat-and-pincode",
+      "title": "In Step 6 (Address & Service Area), when user selects 'No' for service area differing from residential address, show detailed serving location fields: serving city, area, panchayat, and pincode.",
+      "reqIds": [
+        "REQ-31"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-in-step-7-identity-optional-change-the-aadhaar-number-field-from-optional-to-mandatory-required",
+      "title": "In Step 7 (Identity Optional), change the Aadhaar number field from optional to mandatory/required.",
+      "reqIds": [
+        "REQ-32"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-surveydata-type-definition-in-frontend-src-features-survey-types-ts-to-include-all-new-fields-age-number-yearsofexperiencegroup-string-modeofpayment-string-employername-optional-string-insurancetype-optional-string-panchayat-string-block-string-servingcity-optional-string-servingarea-optional-string-servingpanchayat-optional-string-servingpincode-optional-string-and-remove-or-update-agegroup-and-yearsofexperience-fields",
+      "title": "Update the SurveyData type definition in frontend/src/features/survey/types.ts to include all new fields: age (number), yearsOfExperienceGroup (string), modeOfPayment (string), employerName (optional string), insuranceType (optional string), panchayat (string), block (string), servingCity (optional string), servingArea (optional string), servingPanchayat (optional string), servingPincode (optional string), and remove or update ageGroup and yearsOfExperience fields.",
+      "reqIds": [
+        "REQ-33"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-remove-any-extraneous-text-labels-or-helper-text-that-appears-next-to-form-fields-across-all-modified-survey-steps-steps-3-7-to-ensure-a-clean-minimal-ui-without-extra-words-or-descriptions-cluttering-the-fields",
+      "title": "Remove any extraneous text, labels, or helper text that appears next to form fields across all modified survey steps (Steps 3-7) to ensure a clean, minimal UI without extra words or descriptions cluttering the fields.",
+      "reqIds": [
+        "REQ-35"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-review-and-fix-the-admindashboard-category-breakdown-display-to-ensure-category-names-are-shown-as-human-readable-translated-labels-instead-of-raw-i18n-keys-apply-the-same-translation-lookup-pattern-used-in-the-survey-forms",
+      "title": "Review and fix the AdminDashboard category breakdown display to ensure category names are shown as human-readable translated labels instead of raw i18n keys. Apply the same translation lookup pattern used in the survey forms.",
+      "reqIds": [
+        "REQ-37"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-verify-that-the-draft-resumetitle-translation-key-exists-in-both-en-ts-and-hi-ts-translation-files-with-appropriate-values-if-missing-add-it-with-a-suitable-translation-e-g-resume-your-survey-in-english",
+      "title": "Verify that the 'draft.resumeTitle' translation key exists in both en.ts and hi.ts translation files with appropriate values; if missing, add it with a suitable translation (e.g., 'Resume Your Survey' in English).",
+      "reqIds": [
+        "REQ-39"
+      ],
+      "version": 1
+    }
+  ],
+  "new_feature_requests": [
+    {
+      "id": "AR-1",
+      "summary": "Mobile-first, responsive multi-step survey form for gig/informal workers with category/subcategory selection and required consent gate",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-2",
+      "summary": "Phone number capture and mandatory OTP verification via SMS with success/failure handling and verification logs",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-3",
+      "summary": "Multilingual UI support (English + Indian languages) with simple, low text-density UX optimized for low bandwidth",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-4",
+      "summary": "Collect survey sections: personal details, work category/mode, work & income insights, address/service area, additional R&D inputs",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-5",
+      "summary": "Optional identity verification: Aadhaar number input (masked/encrypted) + alternative ID + optional ID image upload",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-6",
+      "summary": "Touch-enabled digital signature capture with confirmation consent text",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-7",
+      "summary": "Submission confirmation flow: generate unique survey ID, send confirmation SMS, optional download/print acknowledgement",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-8",
+      "summary": "Admin/backend: secure database storage, flag verified vs unverified users, category-wise analytics dashboard, CSV/Excel export",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-9",
+      "summary": "Non-functional protections: mandatory privacy notice, CAPTCHA/spam prevention, high completion/low drop-off design, offline save & resume (if possible)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-10",
+      "summary": "Future-ready considerations: ability to convert survey users to app users, worker scoring system, geo-mapping worker supply, multi-tenant scalability",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-16",
+      "summary": "Implement secure backend storage for survey submissions, including a verified/unverified flag tied to OTP status, a unique survey ID generation, and retrieval APIs for admin use.",
+      "reqIds": [
+        "REQ-6"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-17",
+      "summary": "Change survey flow to move phone number verification (OTP) to the last step instead of gating earlier steps",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-20",
+      "summary": "Fix backend OTP generation and verification so OTP verification works reliably (including leading-zero OTPs) and verification checks the OTP value that was generated for the phone number rather than only checking OTP length.",
+      "reqIds": [
+        "REQ-17"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-21",
+      "summary": "Remove the current dependency on a pre-existing survey record during OTP verification so that verifying at the final step works even before `submitSurvey` has created a stored survey; ensure survey OTP status and confirmation SMS logging still become correct when a submission succeeds.",
+      "reqIds": [
+        "REQ-18"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-22",
+      "summary": "Add full bilingual (English + Hindi) consent terms inside the 'View Privacy Notice' section, including free survey participation terms and optional priority token terms with checkboxes",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-23",
+      "summary": "Step 3: Replace age group dropdown with a manual age text input field",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-24",
+      "summary": "Step 4: Change 'Years of Experience' to grouped format (1-5, 6-8, etc.) instead of manual input",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-25",
+      "summary": "Step 5: Add 'Mode of Payment' field and make approximate income format conditional on current work mode (daily wage affects income input)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-26",
+      "summary": "Step 5: Add conditional field under 'Do you receive' → Pay Slip checkbox: if checked, show 'Employee Name / Company Name' input",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-27",
+      "summary": "Step 5: Add sub-field under 'Insurance' checkbox: if checked, show 'Which type of insurance' input",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-28",
+      "summary": "Step 6 (Address & Services): Add 'Panchayat' and 'Block' fields after 'Area' and before 'Service Area'",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-29",
+      "summary": "Step 6: If 'Service Area' is 'No', show detailed serving location fields: city, area, panchayat, pincode",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-30",
+      "summary": "Change Aadhaar number field from optional to mandatory (required field)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-41",
+      "summary": "Update the backend Survey type in backend/main.mo to accept and store all new survey fields: age (Nat), yearsOfExperienceGroup (Text), modeOfPayment (Text), employerName (?Text), insuranceType (?Text), panchayat (Text), block (Text), servingCity (?Text), servingArea (?Text), servingPanchayat (?Text), servingPincode (?Text), and ensure these fields are included in CSV export and admin analytics.",
+      "reqIds": [
+        "REQ-34"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-42",
+      "summary": "Fix display of translation keys showing as 'categories.homeservices' and similar prefixed strings; show only the human-readable value (e.g., 'homeservices') instead of the full i18n key path",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-43",
+      "summary": "Update all dropdown and multi-select components across survey steps to display translated label values instead of raw i18n key paths (e.g., show 'Home Services' instead of 'categories.homeservices'). Ensure the translation lookup function is called correctly for all option labels in Step4WorkerCategory, Step5WorkIncome, Step6AddressServiceArea, and any other components using the options from frontend/src/features/survey/options.ts.",
+      "reqIds": [
+        "REQ-36"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-44",
+      "summary": "Fix 'draft.resumeTitle' i18n key showing as raw text in the UI instead of the translated value",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-45",
+      "summary": "Locate where 'draft.resumeTitle' i18n key is being displayed in the UI (likely in ResumeDraftDialog.tsx or SurveyWizard.tsx) and ensure it is wrapped with the translation function t() so it displays the translated value instead of the raw key string.",
+      "reqIds": [
+        "REQ-38"
+      ],
+      "status": "pending"
+    }
+  ],
+  "gameProjectType": "none",
+  "projectName": "Mobile-first gig worker survey with OTP verification, consent, multilingual UI, admin analytics & export",
+  "clarification_mode": "instant",
+  "clarification_rounds": 0
+}

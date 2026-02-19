@@ -1,0 +1,49 @@
+{
+  "kind": "implementation_plan",
+  "version": "1.0",
+  "title": "Fix draft.resumeTitle i18n key displaying at first position",
+  "requirements": [
+    {
+      "id": "REQ-38",
+      "summary": "Wrap 'draft.resumeTitle' i18n key with translation function t() to display translated value instead of raw key string",
+      "acceptanceCriteria": [
+        "The text 'draft.resumeTitle' no longer appears as raw text in the UI",
+        "The translated value for 'draft.resumeTitle' displays correctly in both English and Hindi",
+        "The fix applies to all locations where this key is rendered"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/features/survey/ResumeDraftDialog.tsx",
+          "operation": "modify",
+          "description": "Import the useLanguage hook to access the t() translation function, then wrap all occurrences of 'draft.resumeTitle' with t() to ensure the translated value is displayed instead of the raw key string. Review the AlertDialogTitle and any other locations where this key may be used as a string literal."
+        },
+        {
+          "path": "frontend/src/features/survey/SurveyWizard.tsx",
+          "operation": "modify",
+          "description": "Search for any usage of 'draft.resumeTitle' string literal and wrap it with t() function from useLanguage hook if found. Ensure the translation function is properly imported and applied to display the localized text."
+        }
+      ]
+    },
+    {
+      "id": "REQ-39",
+      "summary": "Verify and add 'draft.resumeTitle' translation key to both en.ts and hi.ts translation files with appropriate values",
+      "acceptanceCriteria": [
+        "The 'draft.resumeTitle' key exists in frontend/src/i18n/translations/en.ts",
+        "The 'draft.resumeTitle' key exists in frontend/src/i18n/translations/hi.ts",
+        "Both translations provide appropriate localized text"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/i18n/translations/en.ts",
+          "operation": "modify",
+          "description": "Check if the 'draft.resumeTitle' key exists in the draft section of the translations object. If missing, add it with the value 'Resume Your Survey' under the draft namespace to provide appropriate English translation."
+        },
+        {
+          "path": "frontend/src/i18n/translations/hi.ts",
+          "operation": "modify",
+          "description": "Check if the 'draft.resumeTitle' key exists in the draft section of the translations object. If missing, add it with an appropriate Hindi translation (e.g., 'अपना सर्वेक्षण फिर से शुरू करें') under the draft namespace to match the English version."
+        }
+      ]
+    }
+  ]
+}

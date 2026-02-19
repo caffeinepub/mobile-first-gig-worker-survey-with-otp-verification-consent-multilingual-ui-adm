@@ -1,0 +1,50 @@
+{
+  "kind": "coverage_report",
+  "version": "1.0",
+  "generatedAt": "2026-02-19T19:03:51.129Z",
+  "sources": {
+    "buildRequest": true,
+    "implementationPlan": true
+  },
+  "requirements": {
+    "total": 2,
+    "implemented": 1,
+    "items": [
+      {
+        "id": "REQ-38",
+        "summary": "Locate where 'draft.resumeTitle' i18n key is being displayed in the UI (likely in ResumeDraftDialog.tsx or SurveyWizard.tsx) and ensure it is wrapped with the translation function t() so it displays the translated value instead of the raw key string.",
+        "status": "missing",
+        "plannedFiles": [
+          "frontend/src/features/survey/ResumeDraftDialog.tsx",
+          "frontend/src/features/survey/SurveyWizard.tsx"
+        ],
+        "matchedFiles": []
+      },
+      {
+        "id": "REQ-39",
+        "summary": "Verify that the 'draft.resumeTitle' translation key exists in both en.ts and hi.ts translation files with appropriate values; if missing, add it with a suitable translation (e.g., 'Resume Your Survey' in English).",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/i18n/translations/en.ts",
+          "frontend/src/i18n/translations/hi.ts"
+        ],
+        "matchedFiles": [
+          "frontend/src/i18n/translations/en.ts",
+          "frontend/src/i18n/translations/hi.ts"
+        ]
+      }
+    ]
+  },
+  "changedFiles": [
+    "build-request.json",
+    "feature_evidence.json",
+    "frontend-file-summaries.txt",
+    "frontend-implementation-plan.json",
+    "frontend/src/i18n/translations/en.ts",
+    "frontend/src/i18n/translations/hi.ts",
+    "project_state.json",
+    "scratch/component-selection.json",
+    "spec.md",
+    "spec_vs_diff_report.json"
+  ]
+}

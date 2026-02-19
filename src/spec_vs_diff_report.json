@@ -1,0 +1,31 @@
+{
+  "kind": "spec_vs_diff_report",
+  "version": "1.0",
+  "generatedAt": "2026-02-19T19:03:51.126Z",
+  "summary": "The diff demonstrates implementation of translations for the 'draft.resumeTitle' key in both English and Hindi translation files. However, the diff does not show any modifications to UI components (ResumeDraftDialog.tsx or SurveyWizard.tsx) where the translation function t() would need to be applied to wrap the raw key string.",
+  "missing_requirements": [
+    {
+      "id": "REQ-38",
+      "requirement": "Locate where 'draft.resumeTitle' i18n key is being displayed in the UI (likely in ResumeDraftDialog.tsx or SurveyWizard.tsx) and ensure it is wrapped with the translation function t() so it displays the translated value instead of the raw key string.",
+      "reason": "The diff shows no changes to any UI component files that would render the draft.resumeTitle key. Only translation files (en.ts and hi.ts) were modified. Without evidence of wrapping the key with t() in the actual component rendering it, the requirement to fix the display of the raw key string is not fulfilled.",
+      "evidence": []
+    }
+  ],
+  "hallucinated_features": [
+    {
+      "description": "Added complete 'draft' translation section with multiple keys (resumeMessage, resumeButton, startOverButton) beyond what was requested",
+      "reason": "REQ-39 only required verifying/adding the 'draft.resumeTitle' key. The diff shows additional keys (resumeMessage, resumeButton, startOverButton) were added to both translation files, which were not mentioned in the requirements.",
+      "evidence": [
+        "frontend/src/i18n/translations/en.ts",
+        "frontend/src/i18n/translations/hi.ts"
+      ]
+    }
+  ],
+  "confidence": 0.85,
+  "changed_files": [
+    "frontend-file-summaries.txt",
+    "frontend/src/i18n/translations/en.ts",
+    "frontend/src/i18n/translations/hi.ts",
+    "project_state.json"
+  ]
+}
