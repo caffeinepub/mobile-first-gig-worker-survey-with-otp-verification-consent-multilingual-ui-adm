@@ -1,49 +1,57 @@
 {
   "kind": "build_request",
-  "title": "Fix draft.resumeTitle i18n key displaying at first position",
+  "title": "Fix translation keys displaying as raw text instead of translated values",
   "priority": "normal",
   "requirements": [
     {
-      "id": "REQ-38",
-      "text": "Locate where 'draft.resumeTitle' i18n key is being displayed in the UI (likely in ResumeDraftDialog.tsx or SurveyWizard.tsx) and ensure it is wrapped with the translation function t() so it displays the translated value instead of the raw key string.",
+      "id": "REQ-40",
+      "text": "Update ResumeDraftDialog.tsx to wrap the 'draft.resumeTitle' and 'draft.resumeMessage' translation keys with the t() translation function so they display as translated text instead of raw keys.",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-latest"
+          "msg-final"
         ],
         "quotes": [
-          "draft.resumeTitle -- see again this is coming at first"
+          "Yes please fix it",
+          "translation keys like 'draft.resumeTitle' were still showing as raw text"
         ]
       },
       "acceptanceCriteria": [
-        "The text 'draft.resumeTitle' no longer appears as raw text in the UI",
-        "The translated value for 'draft.resumeTitle' displays correctly in both English and Hindi",
-        "The fix applies to all locations where this key is rendered"
+        "The resume draft dialog displays 'Resume Your Survey' (or Hindi equivalent) instead of 'draft.resumeTitle'",
+        "The dialog message shows the translated text instead of 'draft.resumeMessage'",
+        "The translation function t() is called for all user-facing text in the dialog"
       ]
     },
     {
-      "id": "REQ-39",
-      "text": "Verify that the 'draft.resumeTitle' translation key exists in both en.ts and hi.ts translation files with appropriate values; if missing, add it with a suitable translation (e.g., 'Resume Your Survey' in English).",
+      "id": "REQ-41",
+      "text": "Review and fix any other components across the survey wizard (Steps 1-9, SurveyWizard.tsx, ProgressIndicator.tsx) where translation keys are being displayed as raw text instead of calling the t() function to convert them to translated values.",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-latest"
+          "msg-final"
+        ],
+        "quotes": [
+          "translation keys are still showing as raw text",
+          "UI components aren't calling the translation function t()"
         ]
       },
       "acceptanceCriteria": [
-        "The 'draft.resumeTitle' key exists in frontend/src/i18n/translations/en.ts",
-        "The 'draft.resumeTitle' key exists in frontend/src/i18n/translations/hi.ts",
-        "Both translations provide appropriate localized text"
+        "All user-facing text in survey components displays translated values instead of raw i18n keys",
+        "The t() function is properly imported and used for all text that should be localized",
+        "Switching between English and Hindi correctly updates all displayed text"
       ]
     }
   ],
   "constraints": [
-    "Do not modify frontend/src/hooks/useInternetIdentity.ts, frontend/src/hooks/useActor.ts, frontend/src/main.tsx, or frontend/src/components/ui files",
-    "Use the existing translation system via the t() function from LanguageContext"
+    "Do not modify the immutable paths: frontend/src/hooks/useInternetIdentity.ts, frontend/src/hooks/useInternetIdentity.tsx, frontend/src/hooks/useActor.ts, frontend/src/main.tsx, frontend/src/components/ui",
+    "Use the existing i18n translation system with the t() function from LanguageContext",
+    "The translation keys already exist in en.ts and hi.ts files - only fix the component calls"
   ],
   "nonGoals": [
-    "Changing the draft persistence logic or localStorage implementation",
-    "Modifying the ResumeDraftDialog functionality beyond the translation fix"
+    "Adding new translation keys (they already exist)",
+    "Modifying the translation files (en.ts, hi.ts)",
+    "Changing the i18n system architecture",
+    "Updating backend code"
   ],
   "imageRequirements": {
     "required": [],

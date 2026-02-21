@@ -2,11 +2,10 @@
   "kind": "feature_evidence_report",
   "features": [
     {
-      "featureId": "feature-verify-that-the-draft-resumetitle-translation-key-exists-in-both-en-ts-and-hi-ts-translation-files-with-appropriate-values-if-missing-add-it-with-a-suitable-translation-e-g-resume-your-survey-in-english",
-      "featureTitle": "Verify that the 'draft.resumeTitle' translation key exists in both en.ts and hi.ts translation files with appropriate values; if missing, add it with a suitable translation (e.g., 'Resume Your Survey' in English).",
+      "featureId": "feature-update-resumedraftdialog-tsx-to-wrap-the-draft-resumetitle-and-draft-resumemessage-translation-keys-with-the-t-translation-function-so-they-display-as-translated-text-instead-of-raw-keys",
+      "featureTitle": "Update ResumeDraftDialog.tsx to wrap the 'draft.resumeTitle' and 'draft.resumeMessage' translation keys with the t() translation function so they display as translated text instead of raw keys.",
       "files": [
-        "frontend/src/i18n/translations/en.ts",
-        "frontend/src/i18n/translations/hi.ts"
+        "frontend/src/features/survey/ResumeDraftDialog.tsx"
       ],
       "components": [
         "authorization@4.0.0",
@@ -18,7 +17,27 @@
         "github-export-icp-cli@1.0.0"
       ],
       "testIds": [
-        "REQ-39"
+        "REQ-40"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-review-and-fix-any-other-components-across-the-survey-wizard-steps-1-9-surveywizard-tsx-progressindicator-tsx-where-translation-keys-are-being-displayed-as-raw-text-instead-of-calling-the-t-function-to-convert-them-to-translated-values",
+      "featureTitle": "Review and fix any other components across the survey wizard (Steps 1-9, SurveyWizard.tsx, ProgressIndicator.tsx) where translation keys are being displayed as raw text instead of calling the t() function to convert them to translated values.",
+      "files": [
+        "frontend/src/features/survey/components/ProgressIndicator.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "blob-storage@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-41"
       ],
       "confidence": "high"
     }

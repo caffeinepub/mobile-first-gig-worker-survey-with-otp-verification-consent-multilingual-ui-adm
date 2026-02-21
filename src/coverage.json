@@ -1,36 +1,46 @@
 {
   "kind": "coverage_report",
   "version": "1.0",
-  "generatedAt": "2026-02-19T19:03:51.129Z",
+  "generatedAt": "2026-02-21T18:24:01.813Z",
   "sources": {
     "buildRequest": true,
     "implementationPlan": true
   },
   "requirements": {
     "total": 2,
-    "implemented": 1,
+    "implemented": 2,
     "items": [
       {
-        "id": "REQ-38",
-        "summary": "Locate where 'draft.resumeTitle' i18n key is being displayed in the UI (likely in ResumeDraftDialog.tsx or SurveyWizard.tsx) and ensure it is wrapped with the translation function t() so it displays the translated value instead of the raw key string.",
-        "status": "missing",
-        "plannedFiles": [
-          "frontend/src/features/survey/ResumeDraftDialog.tsx",
-          "frontend/src/features/survey/SurveyWizard.tsx"
-        ],
-        "matchedFiles": []
-      },
-      {
-        "id": "REQ-39",
-        "summary": "Verify that the 'draft.resumeTitle' translation key exists in both en.ts and hi.ts translation files with appropriate values; if missing, add it with a suitable translation (e.g., 'Resume Your Survey' in English).",
+        "id": "REQ-40",
+        "summary": "Update ResumeDraftDialog.tsx to wrap the 'draft.resumeTitle' and 'draft.resumeMessage' translation keys with the t() translation function so they display as translated text instead of raw keys.",
         "status": "implemented",
         "plannedFiles": [
-          "frontend/src/i18n/translations/en.ts",
-          "frontend/src/i18n/translations/hi.ts"
+          "frontend/src/features/survey/ResumeDraftDialog.tsx"
         ],
         "matchedFiles": [
-          "frontend/src/i18n/translations/en.ts",
-          "frontend/src/i18n/translations/hi.ts"
+          "frontend/src/features/survey/ResumeDraftDialog.tsx"
+        ]
+      },
+      {
+        "id": "REQ-41",
+        "summary": "Review and fix any other components across the survey wizard (Steps 1-9, SurveyWizard.tsx, ProgressIndicator.tsx) where translation keys are being displayed as raw text instead of calling the t() function to convert them to translated values.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/features/survey/steps/Step1WelcomeConsent.tsx",
+          "frontend/src/features/survey/steps/Step2PhoneOtp.tsx",
+          "frontend/src/features/survey/steps/Step2PhoneDeferredNotice.tsx",
+          "frontend/src/features/survey/steps/Step3BasicDetails.tsx",
+          "frontend/src/features/survey/steps/Step4WorkerCategory.tsx",
+          "frontend/src/features/survey/steps/Step5WorkIncome.tsx",
+          "frontend/src/features/survey/steps/Step6AddressServiceArea.tsx",
+          "frontend/src/features/survey/steps/Step7IdentityOptional.tsx",
+          "frontend/src/features/survey/steps/Step8Signature.tsx",
+          "frontend/src/features/survey/steps/Step9AdditionalInputs.tsx",
+          "frontend/src/features/survey/SurveyWizard.tsx",
+          "frontend/src/features/survey/components/ProgressIndicator.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/features/survey/components/ProgressIndicator.tsx"
         ]
       }
     ]
@@ -40,8 +50,9 @@
     "feature_evidence.json",
     "frontend-file-summaries.txt",
     "frontend-implementation-plan.json",
+    "frontend/src/features/survey/ResumeDraftDialog.tsx",
+    "frontend/src/features/survey/components/ProgressIndicator.tsx",
     "frontend/src/i18n/translations/en.ts",
-    "frontend/src/i18n/translations/hi.ts",
     "project_state.json",
     "scratch/component-selection.json",
     "spec.md",

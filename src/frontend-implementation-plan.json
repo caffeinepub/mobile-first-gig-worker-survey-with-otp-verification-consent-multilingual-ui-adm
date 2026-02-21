@@ -1,47 +1,92 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "Fix draft.resumeTitle i18n key displaying at first position",
+  "title": "Fix translation keys displaying as raw text instead of translated values",
   "requirements": [
     {
-      "id": "REQ-38",
-      "summary": "Wrap 'draft.resumeTitle' i18n key with translation function t() to display translated value instead of raw key string",
+      "id": "REQ-40",
+      "summary": "Update ResumeDraftDialog.tsx to wrap translation keys with t() function so they display as translated text instead of raw keys",
       "acceptanceCriteria": [
-        "The text 'draft.resumeTitle' no longer appears as raw text in the UI",
-        "The translated value for 'draft.resumeTitle' displays correctly in both English and Hindi",
-        "The fix applies to all locations where this key is rendered"
+        "The resume draft dialog displays 'Resume Your Survey' (or Hindi equivalent) instead of 'draft.resumeTitle'",
+        "The dialog message shows the translated text instead of 'draft.resumeMessage'",
+        "The translation function t() is called for all user-facing text in the dialog"
       ],
       "file_operations": [
         {
           "path": "frontend/src/features/survey/ResumeDraftDialog.tsx",
           "operation": "modify",
-          "description": "Import the useLanguage hook to access the t() translation function, then wrap all occurrences of 'draft.resumeTitle' with t() to ensure the translated value is displayed instead of the raw key string. Review the AlertDialogTitle and any other locations where this key may be used as a string literal."
-        },
-        {
-          "path": "frontend/src/features/survey/SurveyWizard.tsx",
-          "operation": "modify",
-          "description": "Search for any usage of 'draft.resumeTitle' string literal and wrap it with t() function from useLanguage hook if found. Ensure the translation function is properly imported and applied to display the localized text."
+          "description": "Import the useLanguage hook to access the t() translation function. Wrap the 'draft.resumeTitle' and 'draft.resumeMessage' translation keys with t() calls so they display translated text instead of raw key strings. Ensure all user-facing text in the AlertDialog (title, description, button labels) properly uses the t() function."
         }
       ]
     },
     {
-      "id": "REQ-39",
-      "summary": "Verify and add 'draft.resumeTitle' translation key to both en.ts and hi.ts translation files with appropriate values",
+      "id": "REQ-41",
+      "summary": "Review and fix all survey wizard components where translation keys are displayed as raw text instead of calling t() to convert them to translated values",
       "acceptanceCriteria": [
-        "The 'draft.resumeTitle' key exists in frontend/src/i18n/translations/en.ts",
-        "The 'draft.resumeTitle' key exists in frontend/src/i18n/translations/hi.ts",
-        "Both translations provide appropriate localized text"
+        "All user-facing text in survey components displays translated values instead of raw i18n keys",
+        "The t() function is properly imported and used for all text that should be localized",
+        "Switching between English and Hindi correctly updates all displayed text"
       ],
       "file_operations": [
         {
-          "path": "frontend/src/i18n/translations/en.ts",
+          "path": "frontend/src/features/survey/steps/Step1WelcomeConsent.tsx",
           "operation": "modify",
-          "description": "Check if the 'draft.resumeTitle' key exists in the draft section of the translations object. If missing, add it with the value 'Resume Your Survey' under the draft namespace to provide appropriate English translation."
+          "description": "Review all text content in the welcome/consent step. Ensure the useLanguage hook is imported and the t() function is called for all user-facing strings. Check that translation keys are wrapped with t() rather than being displayed directly."
         },
         {
-          "path": "frontend/src/i18n/translations/hi.ts",
+          "path": "frontend/src/features/survey/steps/Step2PhoneOtp.tsx",
           "operation": "modify",
-          "description": "Check if the 'draft.resumeTitle' key exists in the draft section of the translations object. If missing, add it with an appropriate Hindi translation (e.g., 'अपना सर्वेक्षण फिर से शुरू करें') under the draft namespace to match the English version."
+          "description": "Review all text content in the phone OTP step. Ensure the useLanguage hook is imported and the t() function is called for all labels, placeholders, button text, and messages. Verify that translation keys are not displayed as raw text."
+        },
+        {
+          "path": "frontend/src/features/survey/steps/Step2PhoneDeferredNotice.tsx",
+          "operation": "modify",
+          "description": "Review all text content in the deferred phone notice step. Ensure the useLanguage hook is imported and the t() function is called for all headings, descriptions, and list items. Check that translation keys are properly wrapped."
+        },
+        {
+          "path": "frontend/src/features/survey/steps/Step3BasicDetails.tsx",
+          "operation": "modify",
+          "description": "Review all text content in the basic details step including labels, placeholders, and option text. Ensure the useLanguage hook is imported and the t() function is called for all user-facing strings to prevent raw translation keys from appearing."
+        },
+        {
+          "path": "frontend/src/features/survey/steps/Step4WorkerCategory.tsx",
+          "operation": "modify",
+          "description": "Review all text content in the worker category step including labels, select options, and radio button text. Ensure the useLanguage hook is imported and the t() function is called for all user-facing strings."
+        },
+        {
+          "path": "frontend/src/features/survey/steps/Step5WorkIncome.tsx",
+          "operation": "modify",
+          "description": "Review all text content in the work/income step including labels, placeholders, select options, and multi-select items. Ensure the useLanguage hook is imported and the t() function is called for all user-facing strings to display translated values."
+        },
+        {
+          "path": "frontend/src/features/survey/steps/Step6AddressServiceArea.tsx",
+          "operation": "modify",
+          "description": "Review all text content in the address/service area step including labels, placeholders, and conditional field text. Ensure the useLanguage hook is imported and the t() function is called for all user-facing strings."
+        },
+        {
+          "path": "frontend/src/features/survey/steps/Step7IdentityOptional.tsx",
+          "operation": "modify",
+          "description": "Review all text content in the optional identity step including labels, placeholders, file upload text, and help text. Ensure the useLanguage hook is imported and the t() function is called for all user-facing strings."
+        },
+        {
+          "path": "frontend/src/features/survey/steps/Step8Signature.tsx",
+          "operation": "modify",
+          "description": "Review all text content in the signature step including consent text, labels, and button text. Ensure the useLanguage hook is imported and the t() function is called for all user-facing strings to prevent raw keys from displaying."
+        },
+        {
+          "path": "frontend/src/features/survey/steps/Step9AdditionalInputs.tsx",
+          "operation": "modify",
+          "description": "Review all text content in the additional inputs step including labels, select options, multi-select items, and radio button text. Ensure the useLanguage hook is imported and the t() function is called for all user-facing strings."
+        },
+        {
+          "path": "frontend/src/features/survey/SurveyWizard.tsx",
+          "operation": "modify",
+          "description": "Review all text content in the main survey wizard component including step navigation, buttons, and any informational text. Ensure the useLanguage hook is imported and the t() function is called for all user-facing strings to display translated values instead of raw keys."
+        },
+        {
+          "path": "frontend/src/features/survey/components/ProgressIndicator.tsx",
+          "operation": "modify",
+          "description": "Review all text content in the progress indicator including step labels and progress text. Ensure the useLanguage hook is imported and the t() function is called for all user-facing strings to prevent translation keys from displaying as raw text."
         }
       ]
     }

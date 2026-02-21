@@ -1,10 +1,11 @@
 # Specification
 
 ## Summary
-**Goal:** Fix the raw i18n key 'draft.resumeTitle' displaying in the UI by ensuring it is properly translated.
+**Goal:** Fix translation keys displaying as raw text in the survey wizard by properly wrapping them with the t() translation function.
 
 **Planned changes:**
-- Wrap all instances of 'draft.resumeTitle' key with the translation function t() in the frontend components
-- Verify and add the 'draft.resumeTitle' translation key in both en.ts and hi.ts files if missing
+- Update ResumeDraftDialog.tsx to wrap 'draft.resumeTitle' and 'draft.resumeMessage' keys with t() function
+- Review and fix all survey wizard components (Steps 1-9, SurveyWizard.tsx, ProgressIndicator.tsx) where translation keys appear as raw text instead of translated values
+- Ensure t() function is properly imported and used for all user-facing text that should be localized
 
-**User-visible outcome:** Users will see the properly translated text (e.g., "Resume Your Survey") instead of the raw key string 'draft.resumeTitle' in both English and Hindi languages.
+**User-visible outcome:** All text in the survey wizard displays properly translated content in the selected language (English or Hindi) instead of showing raw translation keys like 'draft.resumeTitle'.

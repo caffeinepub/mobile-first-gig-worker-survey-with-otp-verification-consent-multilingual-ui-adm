@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0.0",
-  "projectStateVersion": 15,
+  "projectStateVersion": 17,
   "summary": "Responsive, mobile-first multilingual survey website for gig/informal workers to collect and verify R&D data, including OTP-based phone verification, step-by-step form flow, optional identity verification, admin analytics/export, and privacy/compliance requirements for India.",
   "architectural_notes": [
     "Support multilingual content (English + Indian languages) and optimize for low bandwidth/low-end devices.",
@@ -17,8 +17,7 @@
   "known_issues": [
     "OTP/phone verification flow is currently not working (user reported).",
     "Users are not receiving OTP via SMS after entering their phone number (OTP delivery not working / SMS not arriving), blocking verification.",
-    "UI is showing raw i18n translation keys (e.g., 'categories.homeservices') instead of translated values in multiple places across the survey form",
-    "'draft.resumeTitle' i18n key is displaying as raw text instead of the translated string in the UI."
+    "UI is showing raw i18n translation keys (e.g., 'categories.homeservices') instead of translated values in multiple places across the survey form"
   ],
   "isFixRequest": true,
   "existing_features": [
@@ -285,6 +284,22 @@
         "REQ-39"
       ],
       "version": 1
+    },
+    {
+      "id": "feature-update-resumedraftdialog-tsx-to-wrap-the-draft-resumetitle-and-draft-resumemessage-translation-keys-with-the-t-translation-function-so-they-display-as-translated-text-instead-of-raw-keys",
+      "title": "Update ResumeDraftDialog.tsx to wrap the 'draft.resumeTitle' and 'draft.resumeMessage' translation keys with the t() translation function so they display as translated text instead of raw keys.",
+      "reqIds": [
+        "REQ-40"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-review-and-fix-any-other-components-across-the-survey-wizard-steps-1-9-surveywizard-tsx-progressindicator-tsx-where-translation-keys-are-being-displayed-as-raw-text-instead-of-calling-the-t-function-to-convert-them-to-translated-values",
+      "title": "Review and fix any other components across the survey wizard (Steps 1-9, SurveyWizard.tsx, ProgressIndicator.tsx) where translation keys are being displayed as raw text instead of calling the t() function to convert them to translated values.",
+      "reqIds": [
+        "REQ-41"
+      ],
+      "version": 1
     }
   ],
   "new_feature_requests": [
@@ -451,20 +466,6 @@
       "summary": "Update all dropdown and multi-select components across survey steps to display translated label values instead of raw i18n key paths (e.g., show 'Home Services' instead of 'categories.homeservices'). Ensure the translation lookup function is called correctly for all option labels in Step4WorkerCategory, Step5WorkIncome, Step6AddressServiceArea, and any other components using the options from frontend/src/features/survey/options.ts.",
       "reqIds": [
         "REQ-36"
-      ],
-      "status": "pending"
-    },
-    {
-      "id": "AR-44",
-      "summary": "Fix 'draft.resumeTitle' i18n key showing as raw text in the UI instead of the translated value",
-      "reqIds": [],
-      "status": "pending"
-    },
-    {
-      "id": "AR-45",
-      "summary": "Locate where 'draft.resumeTitle' i18n key is being displayed in the UI (likely in ResumeDraftDialog.tsx or SurveyWizard.tsx) and ensure it is wrapped with the translation function t() so it displays the translated value instead of the raw key string.",
-      "reqIds": [
-        "REQ-38"
       ],
       "status": "pending"
     }

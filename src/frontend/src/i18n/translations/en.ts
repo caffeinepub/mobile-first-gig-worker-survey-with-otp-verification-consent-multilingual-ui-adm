@@ -20,6 +20,8 @@ export const en = {
     logout: 'Logout',
     admin: 'Admin',
     step: 'Step',
+    next: 'Next',
+    reviewSubmit: 'Review & Submit',
   },
   header: {
     title: 'Gig Worker Survey',
@@ -35,6 +37,10 @@ export const en = {
     resumeMessage: 'You have an incomplete survey. Would you like to continue where you left off?',
     resumeButton: 'Resume',
     startOverButton: 'Start Over',
+  },
+  progress: {
+    step: 'Step',
+    of: 'of',
   },
   step1: {
     title: 'Welcome',

@@ -1,4 +1,4 @@
-import { useLanguage } from '@/i18n/LanguageContext';
+import React from 'react';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -9,6 +9,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
+import { useLanguage } from '@/i18n/LanguageContext';
 
 interface ResumeDraftDialogProps {
   open: boolean;
@@ -27,12 +28,8 @@ export default function ResumeDraftDialog({ open, onResume, onStartOver }: Resum
           <AlertDialogDescription>{t('draft.resumeMessage')}</AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel onClick={onStartOver}>
-            {t('draft.startOverButton')}
-          </AlertDialogCancel>
-          <AlertDialogAction onClick={onResume}>
-            {t('draft.resumeButton')}
-          </AlertDialogAction>
+          <AlertDialogCancel onClick={onStartOver}>{t('draft.startOverButton')}</AlertDialogCancel>
+          <AlertDialogAction onClick={onResume}>{t('draft.resumeButton')}</AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
