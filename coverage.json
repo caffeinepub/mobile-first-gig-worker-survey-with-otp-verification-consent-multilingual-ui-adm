@@ -1,0 +1,59 @@
+{
+  "kind": "coverage_report",
+  "version": "1.0",
+  "generatedAt": "2026-02-26T14:46:46.578Z",
+  "sources": {
+    "buildRequest": true,
+    "implementationPlan": true
+  },
+  "requirements": {
+    "total": 2,
+    "implemented": 2,
+    "items": [
+      {
+        "id": "REQ-1",
+        "summary": "Restore the preferred languages multi-select options in Step 3 (Basic Details) to include all Jharkhand local languages (e.g., Santali, Mundari, Ho, Kurukh/Oraon, Nagpuri, Khortha, Kurmali, Panch Pargania) along with Hindi, English, and Bangla — exactly as they existed before the unintentional modification.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/features/survey/options.ts",
+          "frontend/src/features/survey/steps/Step3BasicDetails.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/features/survey/options.ts"
+        ]
+      },
+      {
+        "id": "REQ-2",
+        "summary": "Update the LanguageSwitcher component and i18n translation files to add Bangla (Bengali) as a supported UI language alongside the existing English and Hindi options.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/i18n/translations/bn.ts",
+          "frontend/src/i18n/translations/index.ts",
+          "frontend/src/components/LanguageSwitcher.tsx",
+          "frontend/src/i18n/LanguageContext.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/i18n/translations/bn.ts",
+          "frontend/src/i18n/translations/index.ts",
+          "frontend/src/components/LanguageSwitcher.tsx"
+        ]
+      }
+    ]
+  },
+  "changedFiles": [
+    "build-request.json",
+    "feature_evidence.json",
+    "frontend-file-summaries.txt",
+    "frontend-implementation-plan.json",
+    "frontend/src/components/LanguageSwitcher.tsx",
+    "frontend/src/features/survey/options.ts",
+    "frontend/src/i18n/translations/bn.ts",
+    "frontend/src/i18n/translations/en.ts",
+    "frontend/src/i18n/translations/hi.ts",
+    "frontend/src/i18n/translations/index.ts",
+    "project_state.json",
+    "scratch/component-selection.json",
+    "spec.md",
+    "spec_vs_diff_report.json"
+  ]
+}

@@ -1,0 +1,47 @@
+{
+  "kind": "feature_evidence_report",
+  "features": [
+    {
+      "featureId": "feature-restore-the-preferred-languages-multi-select-options-in-step-3-basic-details-to-include-all-jharkhand-local-languages-e-g-santali-mundari-ho-kurukh-oraon-nagpuri-khortha-kurmali-panch-pargania-along-with-hindi-english-and-bangla-exactly-as-they-existed-before-the-unintentional-modification",
+      "featureTitle": "Restore the preferred languages multi-select options in Step 3 (Basic Details) to include all Jharkhand local languages (e.g., Santali, Mundari, Ho, Kurukh/Oraon, Nagpuri, Khortha, Kurmali, Panch Pargania) along with Hindi, English, and Bangla — exactly as they existed before the unintentional modification.",
+      "files": [
+        "frontend/src/features/survey/options.ts"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "blob-storage@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-update-the-languageswitcher-component-and-i18n-translation-files-to-add-bangla-bengali-as-a-supported-ui-language-alongside-the-existing-english-and-hindi-options",
+      "featureTitle": "Update the LanguageSwitcher component and i18n translation files to add Bangla (Bengali) as a supported UI language alongside the existing English and Hindi options.",
+      "files": [
+        "frontend/src/components/LanguageSwitcher.tsx",
+        "frontend/src/i18n/translations/bn.ts",
+        "frontend/src/i18n/translations/index.ts"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "blob-storage@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-2"
+      ],
+      "confidence": "high"
+    }
+  ]
+}

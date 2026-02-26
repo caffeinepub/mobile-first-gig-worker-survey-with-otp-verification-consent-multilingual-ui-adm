@@ -1,0 +1,19 @@
+{
+  "kind": "spec_vs_diff_report",
+  "version": "1.0",
+  "generatedAt": "2026-02-26T14:46:46.574Z",
+  "summary": "Both REQ-1 and REQ-2 appear to be fully implemented. The language options in options.ts now include all Jharkhand local languages plus Hindi, English, and Bangla. The LanguageSwitcher now shows Bangla as a selectable UI language, a bn.ts translation file was added, and the translations index exports bn and includes it in the Language type.",
+  "missing_requirements": [],
+  "hallucinated_features": [],
+  "confidence": 0.95,
+  "changed_files": [
+    "frontend-file-summaries.txt",
+    "frontend/src/components/LanguageSwitcher.tsx",
+    "frontend/src/features/survey/options.ts",
+    "frontend/src/i18n/translations/bn.ts",
+    "frontend/src/i18n/translations/en.ts",
+    "frontend/src/i18n/translations/hi.ts",
+    "frontend/src/i18n/translations/index.ts",
+    "project_state.json"
+  ]
+}

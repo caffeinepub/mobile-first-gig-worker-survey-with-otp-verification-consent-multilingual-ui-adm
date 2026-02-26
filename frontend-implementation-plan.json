@@ -1,0 +1,61 @@
+{
+  "kind": "implementation_plan",
+  "version": "1.0",
+  "title": "Restore Jharkhand local languages and add Bangla UI support",
+  "requirements": [
+    {
+      "id": "REQ-1",
+      "summary": "Restore the preferred languages multi-select in Step 3 to include all Jharkhand local languages (Santali, Mundari, Ho, Kurukh/Oraon, Nagpuri, Khortha, Kurmali, Panch Pargania) along with Hindi, English, and Bangla",
+      "acceptanceCriteria": [
+        "The language multi-select in Step 3 lists Jharkhand local languages: Santali, Mundari, Ho, Kurukh (Oraon), Nagpuri, Khortha, Kurmali, and Panch Pargania.",
+        "Hindi, English, and Bangla are included in the language options.",
+        "All language options are selectable via the multi-select component.",
+        "The language options in frontend/src/features/survey/options.ts reflect the full restored list."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/features/survey/options.ts",
+          "operation": "modify",
+          "description": "Update the languages array to include all Jharkhand local languages (Santali, Mundari, Ho, Kurukh/Oraon, Nagpuri, Khortha, Kurmali, Panch Pargania) along with Hindi, English, and Bangla. Replace any existing language list with this complete set."
+        },
+        {
+          "path": "frontend/src/features/survey/steps/Step3BasicDetails.tsx",
+          "operation": "modify",
+          "description": "Verify that the preferred languages field uses the MultiSelect component with the updated languages array from options.ts. Ensure the field label and placeholder are properly translated and the multi-select displays all restored language options."
+        }
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "summary": "Add Bangla (Bengali) as a supported UI language alongside English and Hindi in the LanguageSwitcher component and i18n translation files",
+      "acceptanceCriteria": [
+        "The LanguageSwitcher dropdown displays Bangla (Bengali) as a selectable UI language.",
+        "A Bangla translation file (bn.ts) is added under frontend/src/i18n/translations/ mirroring the structure of en.ts and hi.ts.",
+        "The translations index (frontend/src/i18n/translations/index.ts) exports the Bangla translations and includes 'bn' in the Language type.",
+        "Selecting Bangla in the switcher renders all UI text in Bangla."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/i18n/translations/bn.ts",
+          "operation": "create",
+          "description": "Create a new Bangla translation file mirroring the exact structure of en.ts and hi.ts. Translate all keys from English to Bangla (Bengali), preserving the nested object structure for common UI labels, step content, privacy notices, admin sections, and consent text. Ensure bilingual consent sections include both Bangla and English text where appropriate."
+        },
+        {
+          "path": "frontend/src/i18n/translations/index.ts",
+          "operation": "modify",
+          "description": "Import the new bn translations object and add it to the translations export alongside en and hi. Update the Language type to include 'bn' as a valid language option. Ensure the TranslationKeys type automatically includes all keys from the Bangla translations."
+        },
+        {
+          "path": "frontend/src/components/LanguageSwitcher.tsx",
+          "operation": "modify",
+          "description": "Add Bangla (Bengali) as a third option in the language dropdown menu. Include a display label 'বাংলা' (Bangla) or 'Bangla (বাংলা)' and map it to the 'bn' language code. Ensure the switcher updates the language context correctly when Bangla is selected."
+        },
+        {
+          "path": "frontend/src/i18n/LanguageContext.tsx",
+          "operation": "modify",
+          "description": "Verify that the LanguageContext and useLanguage hook support 'bn' as a valid language option. Ensure the t() translation function correctly retrieves Bangla strings when the language is set to 'bn'. No structural changes needed if the implementation is already dynamic."
+        }
+      ]
+    }
+  ]
+}
